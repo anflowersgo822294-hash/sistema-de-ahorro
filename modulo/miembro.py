@@ -11,30 +11,28 @@ def interfaz_miembro(user):
         try:
             run_query("""
                 INSERT INTO ahorro (
-                    Monto_actual, Fecha_de_actualización, id_miembro, 
-                    Resto, Saldo_min_inicial, Total_de_ahorro, Retiro
+                    Monto_actual, Fecha_de_actualización, id_miembro,
+                    Retiro, Saldo_min_inicial, Total_de_ahorro
                 )
-                VALUES (%s, %s, %s, %s, %s, %s, %s)
+                VALUES (%s, %s, %s, %s, %s, %s)
             """, (
                 monto,
                 date.today(),
                 user.get("id_miembro"),
-                monto,
-                5.00,
-                monto,
-                0.00
+                0.00,          # Retiro inicial
+                5.00,          # Saldo mínimo inicial
+                monto
             ), fetch=False)
             st.success("Ahorro registrado correctamente")
         except Exception as e:
             st.error(f"No se pudo registrar el ahorro: {e}")
 
-    # Tabla de ahorros del miembro
+    # Mostrar ahorros del miembro
     st.subheader("Mis ahorros")
     try:
         datos = run_query("""
-            SELECT 
-                Monto_actual, Fecha_de_actualización, Total_de_ahorro, 
-                Resto, Saldo_min_inicial, Retiro
+            SELECT Monto_actual, Fecha_de_actualización, Total_de_ahorro,
+                   Retiro, Saldo_min_inicial
             FROM ahorro
             WHERE id_miembro=%s
         """, (user.get("id_miembro"),))
@@ -42,12 +40,11 @@ def interfaz_miembro(user):
     except Exception as e:
         st.error(f"No se pudieron cargar tus ahorros: {e}")
 
-    # Tabla de cierre de ciclo del miembro
+    # Mostrar cierre de ciclo del miembro
     st.subheader("Mi cierre de ciclo")
     try:
         cierre = run_query("""
-            SELECT 
-                Saldo_final, Fecha, Fondo_total_grupo, Monto_a_retirar
+            SELECT `Saldo final`, Fecha, `Fondo total del grupo`, `Monto a retirar`
             FROM cierre_de_ciclo
             WHERE id_miembro=%s
         """, (user.get("id_miembro"),))
