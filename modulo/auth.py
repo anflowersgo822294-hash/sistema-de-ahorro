@@ -7,7 +7,12 @@ def login_form():
     password = st.sidebar.text_input("Contraseña", type="password")
 
     if st.sidebar.button("Ingresar"):
-        user = validar_usuario(username, password)
+        try:
+            user = validar_usuario(username, password)
+        except Exception as e:
+            st.error(f"No se pudo validar el usuario. Revisa la conexión a BD. Detalle: {e}")
+            return
+
         if user:
             st.session_state["usuario"] = user
             st.success(f"Bienvenido {user['usuario']} ({user['rol']})")
