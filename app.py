@@ -3,11 +3,12 @@ from modulo.auth import login_form, current_user
 from modulo.miembro import interfaz_miembro
 from modulo.promotora import interfaz_promotora
 from modulo.ahorro import interfaz_ahorro
-from modulo.cierre_de_ciclo import interfaz_cierre  # ← cambio aquí
+from modulo.cierre_de_ciclo import interfaz_cierre
 
 st.set_page_config(page_title="Sistema de Ahorro", layout="wide")
 
 def main():
+    # Login
     login_form()
     user = current_user()
 
