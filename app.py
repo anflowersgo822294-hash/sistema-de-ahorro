@@ -1,6 +1,8 @@
 import mysql.connector
 import os
 import streamlit as st
+from modulos.login import login
+login()
 
 # Obtener las credenciales de las variables de entorno (seguridad)
 host = os.getenv("DB_HOST", "bzd1eng5tfooqaj4orni-mysql.services.clever-cloud.com")
