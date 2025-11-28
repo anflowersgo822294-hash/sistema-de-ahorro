@@ -1,6 +1,5 @@
-# modulo/grupo.py
 import streamlit as st
-from modulo.db import run_query, run_action
+from modulo.db import run_query
 from modulo.auth import require_role
 
 def ui():
@@ -13,8 +12,15 @@ def ui():
         st.subheader("Crear/editar grupo")
         id_promotora = st.number_input("ID promotora", min_value=1, step=1)
         nombre = st.text_input("Nombre")
-        fecha_inicial = st.text_input("Fecha inicial (YYYY-MM-DD)")
+        fecha_inicial = st.date_input("Fecha inicial")  # más seguro que text_input
+
         if st.button("Crear grupo"):
-            run_action("INSERT INTO grupo (id_promotora, `Nombre`, `Fecha inicial`, id_cierre, id_prestamo) VALUES (%s,%s,%s,%s,%s)",
-                       (id_promotora, nombre, fecha_inicial, 0, 0))
-            st.success("Grupo creado.")
+            try:
+                run_query(
+                    "INSERT INTO grupo (id_promotora, Nombre, Fecha_inicial, id_cierre, id_prestamo) VALUES (%s,%s,%s,%s,%s)",
+                    (id_promotora, nombre, fecha_inicial, 0, 0),
+                    fetch=False
+                )
+                st.success("Grupo creado.")
+            except Exception as e:
+                st.error(f"Error creando grupo: {e}")
