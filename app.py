@@ -1,7 +1,7 @@
 import streamlit as st
 from modulo.auth import login_form, current_user, require_role
 from modulo import miembro, promotora, grupo, ahorro, cierre_ciclo
-
+from modulo.db import get_conn, run_query
 def main():
     st.set_page_config(page_title="Sistema de Ahorro", layout="wide")
 
