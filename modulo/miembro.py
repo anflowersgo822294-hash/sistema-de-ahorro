@@ -10,9 +10,19 @@ def interfaz_miembro(user):
     if st.button("Registrar ahorro"):
         try:
             run_query("""
-                INSERT INTO ahorro (Monto_actual, Fecha_de_actualizacion, id_miembro, Resto, Saldo_min_inicial, Total_de_ahorro)
+                INSERT INTO ahorro (
+                    Monto_actual, Fecha_de_actualizacion, id_miembro, 
+                    Resto, Saldo_min_inicial, Total_de_ahorro
+                )
                 VALUES (%s, %s, %s, %s, %s, %s)
-            """, (monto, date.today(), user.get("id_miembro"), monto, 5.00, monto), fetch=False)
+            """, (
+                monto,
+                date.today(),
+                user.get("id_miembro"),
+                monto,
+                5.00,
+                monto
+            ), fetch=False)
             st.success("Ahorro registrado correctamente")
         except Exception as e:
             st.error(f"No se pudo registrar el ahorro: {e}")
@@ -20,7 +30,11 @@ def interfaz_miembro(user):
     # Tabla de ahorros del miembro
     st.subheader("Mis ahorros")
     try:
-        datos = run_query("SELECT * FROM ahorro WHERE id_miembro=%s", (user.get("id_miembro"),))
+        datos = run_query("""
+            SELECT Monto_actual, Fecha_de_actualizacion, Total_de_ahorro, Resto, Saldo_min_inicial
+            FROM ahorro
+            WHERE id_miembro=%s
+        """, (user.get("id_miembro"),))
         st.dataframe(datos)
     except Exception as e:
         st.error(f"No se pudieron cargar tus ahorros: {e}")
@@ -28,7 +42,11 @@ def interfaz_miembro(user):
     # Tabla de cierre de ciclo del miembro
     st.subheader("Mi cierre de ciclo")
     try:
-        cierre = run_query("SELECT * FROM cierre_de_ciclo WHERE id_miembro=%s", (user.get("id_miembro"),))
+        cierre = run_query("""
+            SELECT Saldo_final, Fecha, Fondo_total_grupo, Monto_a_retirar
+            FROM cierre_de_ciclo
+            WHERE id_miembro=%s
+        """, (user.get("id_miembro"),))
         st.dataframe(cierre)
     except Exception as e:
         st.error(f"No se pudo cargar tu cierre de ciclo: {e}")
