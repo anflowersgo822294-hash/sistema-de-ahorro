@@ -1,6 +1,10 @@
 import mysql.connector
 from mysql.connector import Error
 import os
+from dotenv import load_dotenv
+
+# Cargar variables de entorno desde .env si existe
+load_dotenv()
 
 def obtener_conexion():
     try:
