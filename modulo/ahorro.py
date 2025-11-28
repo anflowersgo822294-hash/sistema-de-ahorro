@@ -5,7 +5,7 @@ def interfaz_ahorro():
     st.header("Resumen general de ahorros")
     try:
         datos = run_query("""
-            SELECT a.id_ahorro, m.Nombre, a.Monto_actual, a.Fecha_actualizacion, a.Resto, a.Saldo_min_inicial, a.Total_de_ahorro
+            SELECT a.id_ahorro, m.Nombre, a.Monto_actual, a.Fecha_de_actualizacion, a.Resto, a.Saldo_min_inicial, a.Total_de_ahorro
             FROM ahorro a
             JOIN miembro m ON a.id_miembro = m.id_miembro
         """)
