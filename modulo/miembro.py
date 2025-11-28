@@ -11,17 +11,18 @@ def interfaz_miembro(user):
         try:
             run_query("""
                 INSERT INTO ahorro (
-                    Monto_actual, Fecha_de_actualizacion, id_miembro, 
-                    Resto, Saldo_min_inicial, Total_de_ahorro
+                    Monto_actual, Fecha_de_actualización, id_miembro, 
+                    Resto, Saldo_min_inicial, Total_de_ahorro, Retiro
                 )
-                VALUES (%s, %s, %s, %s, %s, %s)
+                VALUES (%s, %s, %s, %s, %s, %s, %s)
             """, (
                 monto,
                 date.today(),
                 user.get("id_miembro"),
                 monto,
                 5.00,
-                monto
+                monto,
+                0.00  # ← valor inicial para Retiro
             ), fetch=False)
             st.success("Ahorro registrado correctamente")
         except Exception as e:
@@ -31,7 +32,7 @@ def interfaz_miembro(user):
     st.subheader("Mis ahorros")
     try:
         datos = run_query("""
-            SELECT Monto_actual, Fecha_de_actualizacion, Total_de_ahorro, Resto, Saldo_min_inicial
+            SELECT Monto_actual, Fecha_de_actualización, Total_de_ahorro, Resto, Saldo_min_inicial, Retiro
             FROM ahorro
             WHERE id_miembro=%s
         """, (user.get("id_miembro"),))
