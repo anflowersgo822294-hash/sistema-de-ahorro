@@ -1,28 +1,21 @@
-# modulo/db.py
-import mysql.connector
 import streamlit as st
+import mysql.connector
 
 def get_conn():
     return mysql.connector.connect(
         host=st.secrets["db"]["host"],
+        port=st.secrets["db"]["port"],
         user=st.secrets["db"]["user"],
         password=st.secrets["db"]["password"],
         database=st.secrets["db"]["database"]
     )
 
-def run_query(query, params=None, dict_cursor=True):
+def run_query(query, params=None):
     conn = get_conn()
-    cursor = conn.cursor(dictionary=dict_cursor)
+    cursor = conn.cursor(dictionary=True)
     cursor.execute(query, params or ())
     rows = cursor.fetchall()
-    cursor.close()
-    conn.close()
-    return rows
-
-def run_action(query, params=None):
-    conn = get_conn()
-    cursor = conn.cursor()
-    cursor.execute(query, params or ())
     conn.commit()
     cursor.close()
     conn.close()
+    return rows
