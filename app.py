@@ -1,5 +1,5 @@
 import streamlit as st
-from modulo.login import login
+from modulo.login import login  # ✅ usa "modulo" singular
 
 def main():
     st.set_page_config(page_title="Sistema de Ahorro", layout="centered")
