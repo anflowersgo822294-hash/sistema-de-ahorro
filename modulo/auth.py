@@ -15,13 +15,13 @@ def login_form():
 
         if user:
             st.session_state["usuario"] = user
-            st.success(f"Bienvenido {user['usuario']} ({user['rol']})")
+            st.success(f"Bienvenido {user['Usuario']}")
         else:
             st.error("Usuario o contraseña incorrectos")
 
 def validar_usuario(username, password):
     rows = run_query(
-        "SELECT * FROM socios WHERE usuario=%s AND contraseña=%s",
+        "SELECT * FROM socios WHERE Usuario=%s AND Contra=%s",
         (username, password)
     )
     return rows[0] if rows else None
