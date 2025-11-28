@@ -22,7 +22,7 @@ def interfaz_miembro(user):
                 monto,
                 5.00,
                 monto,
-                0.00  # ← valor inicial para Retiro
+                0.00
             ), fetch=False)
             st.success("Ahorro registrado correctamente")
         except Exception as e:
@@ -32,7 +32,9 @@ def interfaz_miembro(user):
     st.subheader("Mis ahorros")
     try:
         datos = run_query("""
-            SELECT Monto_actual, Fecha_de_actualización, Total_de_ahorro, Resto, Saldo_min_inicial, Retiro
+            SELECT 
+                Monto_actual, Fecha_de_actualización, Total_de_ahorro, 
+                Resto, Saldo_min_inicial, Retiro
             FROM ahorro
             WHERE id_miembro=%s
         """, (user.get("id_miembro"),))
@@ -44,7 +46,8 @@ def interfaz_miembro(user):
     st.subheader("Mi cierre de ciclo")
     try:
         cierre = run_query("""
-            SELECT Saldo_final, Fecha, Fondo_total_grupo, Monto_a_retirar
+            SELECT 
+                Saldo_final, Fecha, Fondo_total_grupo, Monto_a_retirar
             FROM cierre_de_ciclo
             WHERE id_miembro=%s
         """, (user.get("id_miembro"),))
