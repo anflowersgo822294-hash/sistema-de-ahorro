@@ -9,8 +9,7 @@ def interfaz_ahorro():
                 a.id_ahorro, 
                 m.Nombre, 
                 a.Monto_actual, 
-                a.Fecha_de_actualización, 
-                a.Resto, 
+                a.Fecha_de_actualización,  
                 a.Saldo_min_inicial, 
                 a.Total_de_ahorro,
                 a.Retiro
