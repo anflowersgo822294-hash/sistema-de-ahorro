@@ -1,5 +1,5 @@
 import streamlit as st
-from modulos.config.conexion import obtener_conexion
+from modulo.config.conexion import obtener_conexion  # ✅ también "modulo" singular
 
 def verificar_usuario(usuario, contrasena):
     con = obtener_conexion()
