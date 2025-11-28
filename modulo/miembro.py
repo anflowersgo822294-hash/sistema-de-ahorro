@@ -10,7 +10,7 @@ def interfaz_miembro(user):
     if st.button("Registrar ahorro"):
         try:
             run_query("""
-                INSERT INTO ahorro (Monto_actual, Fecha_actualizacion, id_miembro, Resto, Saldo_min_inicial, Total_de_ahorro)
+                INSERT INTO ahorro (Monto_actual, Fecha_de_actualizacion, id_miembro, Resto, Saldo_min_inicial, Total_de_ahorro)
                 VALUES (%s, %s, %s, %s, %s, %s)
             """, (monto, date.today(), user.get("id_miembro"), monto, 5.00, monto), fetch=False)
             st.success("Ahorro registrado correctamente")
@@ -28,7 +28,7 @@ def interfaz_miembro(user):
     # Tabla de cierre de ciclo del miembro
     st.subheader("Mi cierre de ciclo")
     try:
-        cierre = run_query("SELECT * FROM cierre WHERE id_miembro=%s", (user.get("id_miembro"),))
+        cierre = run_query("SELECT * FROM cierre_de_ciclo WHERE id_miembro=%s", (user.get("id_miembro"),))
         st.dataframe(cierre)
     except Exception as e:
         st.error(f"No se pudo cargar tu cierre de ciclo: {e}")
