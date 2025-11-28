@@ -3,7 +3,7 @@ from modulo.auth import login_form, current_user
 from modulo.miembro import interfaz_miembro
 from modulo.promotora import interfaz_promotora
 from modulo.ahorro import interfaz_ahorro
-from modulo.cierre import interfaz_cierre
+from modulo.cierre_de_ciclo import interfaz_cierre  # ← cambio aquí
 
 st.set_page_config(page_title="Sistema de Ahorro", layout="wide")
 
