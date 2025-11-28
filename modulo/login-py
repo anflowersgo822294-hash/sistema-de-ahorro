@@ -1,14 +1,12 @@
 import streamlit as st
 from modulos.config.conexion import obtener_conexion
 
-
 def verificar_usuario(usuario, contrasena):
     con = obtener_conexion()
     if not con:
         st.error("⚠️ No se pudo conectar a la base de datos.")
         return None
     else:
-        # ✅ Guardar en el estado que la conexión fue exitosa
         st.session_state["conexion_exitosa"] = True
 
     try:
@@ -20,11 +18,9 @@ def verificar_usuario(usuario, contrasena):
     finally:
         con.close()
 
-
 def login():
     st.title("Inicio de sesión")
 
-    # 🟢 Mostrar mensaje persistente si ya hubo conexión exitosa
     if st.session_state.get("conexion_exitosa"):
         st.success("✅ Conexión a la base de datos establecida correctamente.")
 
