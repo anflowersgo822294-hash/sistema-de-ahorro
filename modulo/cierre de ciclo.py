@@ -30,7 +30,7 @@ def interfaz_cierre():
             retiro = round(proporcion * fondo_total, 2)
             try:
                 run_query("""
-                    INSERT INTO cierre (id_miembro, Saldo_final, Fecha, Fondo_total_grupo, Monto_a_retirar)
+                    INSERT INTO cierre_de_ciclo (id_miembro, Saldo_final, Fecha, Fondo_total_grupo, Monto_a_retirar)
                     VALUES (%s, %s, %s, %s, %s)
                 """, (a["id_miembro"], a["Total_de_ahorro"] or 0, date.today(), fondo_total, retiro), fetch=False)
             except Exception as e:
@@ -42,7 +42,7 @@ def interfaz_cierre():
     try:
         cierre = run_query("""
             SELECT c.id_cierre, m.Nombre, c.Saldo_final, c.Fecha, c.Fondo_total_grupo, c.Monto_a_retirar
-            FROM cierre c
+            FROM cierre_de_ciclo c
             JOIN miembro m ON c.id_miembro = m.id_miembro
         """)
         st.dataframe(cierre)
